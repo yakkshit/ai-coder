@@ -152,14 +152,19 @@ export const APIKeyManager: React.FC<APIKeyManagerProps> = ({ provider, apiKey, 
               </IconButton>
             }
             {provider?.getApiKeyLink && !apiKey && (
-              <IconButton
-                onClick={() => window.open(provider?.getApiKeyLink)}
-                title="Get API Key"
-                className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 flex items-center gap-2"
-              >
-                <span className="text-xs whitespace-nowrap">{provider?.labelForGetApiKey || 'Get API Key'}</span>
-                <div className={`${provider?.icon || 'i-ph:key'} w-4 h-4`} />
-              </IconButton>
+                <IconButton
+                  onClick={() => window.open(provider?.getApiKeyLink)}
+                  title="Get API Key"
+                  className={`
+                    flex items-center gap-2
+                    text-lime-700 dark:text-black
+                  `}
+                >
+                  <span className="text-xs whitespace-nowrap text-lime-700 dark:text-white">
+                    {provider?.labelForGetApiKey || 'Get API Key'}
+                  </span>
+                  <div className={`${provider?.icon || 'i-ph:key'} w-4 h-4 text-lime-700 dark:text-white`} />
+                </IconButton>
             )}
           </>
         )}

@@ -14,13 +14,22 @@ let commitJson = {
   version: JSON.stringify(process.env.npm_package_version),
 };
 
+// ASCII animation
+const animation = `
+▜ ▘       ▌   ▘▜  ▌    
+▐ ▌▛▌▛▌▛▌ ▛▌▌▌▌▐ ▛▌█▌▛▘
+▐▖▌▌▌▙▌▙▌ ▙▌▙▌▌▐▖▙▌▙▖▌ 
+     ▄▌                
+`;
+
+console.log(animation);
 console.log(`
-★═══════════════════════════════════════★
-          B O L T . D I Y
-         ⚡️  Welcome  ⚡️
-★═══════════════════════════════════════★
+★═══════════════════════════════════════════════════════════════★
+          Welcome to Cedzlabs Tools Fullstack Builder
+   Build with Stack Blaze + Bolt.new for blazing fast results!
+★═══════════════════════════════════════════════════════════════★
 `);
 console.log('📍 Current Version Tag:', `v${commitJson.version}`);
 console.log('📍 Current Commit Version:', commitJson.hash);
-console.log('  Please wait until the URL appears here');
-console.log('★═══════════════════════════════════════★');
+console.log('  For more info, visit: https://cedzlabs.com');
+console.log('★═══════════════════════════════════════════════════════════════★');

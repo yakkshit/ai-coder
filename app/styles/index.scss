@@ -13,14 +13,16 @@ body {
   width: 100%;
 }
 
+::selection {
+  background: rgb(0 229 255);
+  color: rgb(0 0 0);
+}
+
 :root {
   --gradient-opacity: 0.8;
-  --primary-color: rgba(158, 117, 240, var(--gradient-opacity));
-  --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
-  --accent-color: rgba(128, 59, 239, var(--gradient-opacity));
-  // --primary-color: rgba(147, 112, 219, var(--gradient-opacity));
-  // --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
-  // --accent-color: rgba(180, 170, 220, var(--gradient-opacity));
+  --primary-color: rgba(132, 204, 22, var(--gradient-opacity));
+  --secondary-color: rgba(101, 163, 13, var(--gradient-opacity));
+  --accent-color: rgba(163, 230, 53, var(--gradient-opacity));
 }
 
 .modern-scrollbar {
@@ -69,4 +71,18 @@ body {
 
   // Firefox support for inverted colors
   scrollbar-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 50%) transparent;
+}
+
+.dotted-bg {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .dotted-bg {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.lime-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
 }

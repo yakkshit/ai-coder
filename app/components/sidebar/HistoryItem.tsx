@@ -1,10 +1,13 @@
+import type React from 'react';
+
 import { useParams } from '@remix-run/react';
 import { classNames } from '~/utils/classNames';
-import { type ChatHistoryItem } from '~/lib/persistence';
+import type { ChatHistoryItem } from '~/lib/persistence';
 import WithTooltip from '~/components/ui/Tooltip';
 import { useEditChatDescription } from '~/lib/hooks';
 import { forwardRef, type ForwardedRef, useCallback } from 'react';
 import { Checkbox } from '~/components/ui/Checkbox';
+import { motion } from 'framer-motion';
 
 interface HistoryItemProps {
   item: ChatHistoryItem;
@@ -40,7 +43,6 @@ export function HistoryItem({
       if (selectionMode) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Item clicked in selection mode:', item.id);
         onToggleSelection?.(item.id);
       }
     },
@@ -48,7 +50,6 @@ export function HistoryItem({
   );
 
   const handleCheckboxChange = useCallback(() => {
-    console.log('Checkbox changed for item:', item.id);
     onToggleSelection?.(item.id);
   }, [item.id, onToggleSelection]);
 
@@ -56,7 +57,6 @@ export function HistoryItem({
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault();
       event.stopPropagation();
-      console.log('Delete button clicked for item:', item.id);
 
       if (onDelete) {
         onDelete(event as unknown as React.UIEvent);
@@ -66,13 +66,22 @@ export function HistoryItem({
   );
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
       className={classNames(
-        'group rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50/80 dark:hover:bg-gray-800/30 overflow-hidden flex justify-between items-center px-3 py-2 transition-colors',
-        { 'text-gray-900 dark:text-white bg-gray-50/80 dark:bg-gray-800/30': isActiveChat },
-        { 'cursor-pointer': selectionMode },
+        'group rounded-lg text-sm hover:bg-lime-50/80 dark:hover:bg-lime-950/20 overflow-hidden flex justify-between items-center px-3 py-2.5 transition-all',
+        {
+          'text-gray-900 dark:text-white bg-lime-50/80 dark:bg-lime-950/20 border-l-4 border-lime-500 dark:border-lime-600':
+            isActiveChat,
+          'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white': !isActiveChat,
+          'cursor-pointer': selectionMode,
+        },
       )}
       onClick={selectionMode ? handleItemClick : undefined}
+      whileHover={{ x: 3 }}
     >
       {selectionMode && (
         <div className="flex items-center mr-2" onClick={(e) => e.stopPropagation()}>
@@ -80,7 +89,7 @@ export function HistoryItem({
             id={`select-${item.id}`}
             checked={isSelected}
             onCheckedChange={handleCheckboxChange}
-            className="h-4 w-4"
+            className="h-4 w-4 text-lime-500 border-gray-300 dark:border-gray-600 focus:ring-lime-500"
           />
         </div>
       )}
@@ -89,7 +98,7 @@ export function HistoryItem({
         <form onSubmit={handleSubmit} className="flex-1 flex items-center gap-2">
           <input
             type="text"
-            className="flex-1 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-md px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500/50"
+            className="flex-1 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-md px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-lime-500/50"
             autoFocus
             value={currentDescription}
             onChange={handleChange}
@@ -98,7 +107,7 @@ export function HistoryItem({
           />
           <button
             type="submit"
-            className="i-ph:check h-4 w-4 text-gray-500 hover:text-purple-500 transition-colors"
+            className="i-ph:check h-4 w-4 text-gray-500 hover:text-lime-500 transition-colors"
             onMouseDown={handleSubmit}
           />
         </form>
@@ -113,7 +122,8 @@ export function HistoryItem({
           </WithTooltip>
           <div
             className={classNames(
-              'absolute right-0 top-0 bottom-0 flex items-center bg-transparent px-2 transition-colors',
+              'absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-lime-50/90 dark:from-gray-900/90 to-transparent px-2 transition-colors',
+              { 'from-lime-50/90 dark:from-lime-950/30': isActiveChat },
             )}
           >
             <div className="flex items-center gap-2.5 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -153,7 +163,7 @@ export function HistoryItem({
           </div>
         </a>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -175,11 +185,13 @@ const ChatActionButton = forwardRef(
   ) => {
     return (
       <WithTooltip tooltip={toolTipContent} position="bottom" sideOffset={4}>
-        <button
+        <motion.button
           ref={ref}
           type="button"
-          className={`text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 transition-colors ${icon} ${className ? className : ''}`}
+          className={`text-gray-400 dark:text-gray-500 hover:text-lime-500 dark:hover:text-lime-400 transition-colors ${icon} ${className ? className : ''}`}
           onClick={onClick}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
         />
       </WithTooltip>
     );

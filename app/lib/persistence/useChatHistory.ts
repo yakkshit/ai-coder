@@ -30,6 +30,8 @@ export interface ChatHistoryItem {
   messages: Message[];
   timestamp: string;
   metadata?: IChatMetadata;
+  createdAt: number;
+  updatedAt: number;
 }
 
 const persistenceEnabled = !import.meta.env.VITE_DISABLE_PERSISTENCE;

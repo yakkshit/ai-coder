@@ -31,29 +31,29 @@ export function binDates(_list: ChatHistoryItem[]) {
 
 function dateCategory(date: Date) {
   if (isToday(date)) {
-    return 'Today';
+    return '🟢 Today';
   }
 
   if (isYesterday(date)) {
-    return 'Yesterday';
+    return '🟡 Yesterday';
   }
 
   if (isThisWeek(date)) {
-    // e.g., "Mon" instead of "Monday"
-    return format(date, 'EEE');
+    // Add day name with emoji
+    return `📅 ${format(date, 'EEEE')}`;
   }
 
   const thirtyDaysAgo = subDays(new Date(), 30);
 
   if (isAfter(date, thirtyDaysAgo)) {
-    return 'Past 30 Days';
+    return '📆 Past 30 Days';
   }
 
   if (isThisYear(date)) {
-    // e.g., "Jan" instead of "January"
-    return format(date, 'LLL');
+    // Full month name for better readability
+    return `🗓️ ${format(date, 'MMMM')}`;
   }
 
-  // e.g., "Jan 2023" instead of "January 2023"
-  return format(date, 'LLL yyyy');
+  // Full month and year for better readability
+  return `📚 ${format(date, 'MMMM yyyy')}`;
 }

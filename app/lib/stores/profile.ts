@@ -4,6 +4,7 @@ interface Profile {
   username: string;
   bio: string;
   avatar: string;
+  email: string;
 }
 
 // Initialize with stored profile or defaults
@@ -14,6 +15,7 @@ const initialProfile: Profile = storedProfile
       username: '',
       bio: '',
       avatar: '',
+      email: 'soon...',
     };
 
 export const profileStore = atom<Profile>(initialProfile);

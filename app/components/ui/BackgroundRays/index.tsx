@@ -1,16 +1,15 @@
+import type React from 'react';
 import styles from './styles.module.scss';
+import { classNames } from '~/utils/classNames';
 
-const BackgroundRays = () => {
+interface BackgroundRaysProps {
+  className?: string;
+}
+
+const BackgroundRays: React.FC<BackgroundRaysProps> = ({ className }) => {
   return (
-    <div className={`${styles.rayContainer} `}>
-      <div className={`${styles.lightRay} ${styles.ray1}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray2}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray3}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray4}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray5}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray6}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray7}`}></div>
-      <div className={`${styles.lightRay} ${styles.ray8}`}></div>
+    <div className={classNames(styles.container, className, 'fixed inset-0 -z-10 overflow-hidden')}>
+      <div className={classNames(styles.rays, 'lime-gradient opacity-20 dark:opacity-20')} />
     </div>
   );
 };

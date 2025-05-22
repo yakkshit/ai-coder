@@ -1,3 +1,5 @@
+import type React from 'react';
+
 import { useStore } from '@nanostores/react';
 import useViewport from '~/lib/hooks';
 import { chatStore } from '~/lib/stores/chat';
@@ -11,8 +13,9 @@ import { NetlifyDeploymentLink } from '~/components/chat/NetlifyDeploymentLink.c
 import { VercelDeploymentLink } from '~/components/chat/VercelDeploymentLink.client';
 import { useVercelDeploy } from '~/components/deploy/VercelDeploy.client';
 import { useNetlifyDeploy } from '~/components/deploy/NetlifyDeploy.client';
+import { motion, AnimatePresence } from 'framer-motion';
 
-interface HeaderActionButtonsProps {}
+type HeaderActionButtonsProps = {};
 
 export function HeaderActionButtons({}: HeaderActionButtonsProps) {
   const showWorkbench = useStore(workbenchStore.showWorkbench);
@@ -68,98 +71,120 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex gap-3">
       <div className="relative" ref={dropdownRef}>
-        <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden mr-2 text-sm">
-          <Button
-            active
-            disabled={isDeploying || !activePreview || isStreaming}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="px-4 hover:bg-bolt-elements-item-backgroundActive flex items-center gap-2"
-          >
-            {isDeploying ? `Deploying to ${deployingTo}...` : 'Deploy'}
-            <div
-              className={classNames('i-ph:caret-down w-4 h-4 transition-transform', isDropdownOpen ? 'rotate-180' : '')}
-            />
-          </Button>
-        </div>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          disabled={isDeploying || !activePreview || isStreaming}
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          className={classNames(
+            'px-4 py-2 rounded-lg flex items-center gap-2 font-medium text-sm transition-all',
+            isDeploying || !activePreview || isStreaming
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+              : 'bg-lime-500 hover:bg-lime-600 text-white shadow-md hover:shadow-lg',
+          )}
+        >
+          {isDeploying ? (
+            <>
+              <div className="animate-spin i-ph:circle-notch w-4 h-4" />
+              <span>Deploying to {deployingTo}...</span>
+            </>
+          ) : (
+            <>
+              <div className="i-ph:rocket-launch w-4 h-4" />
+              <span>Deploy</span>
+              <div
+                className={classNames(
+                  'i-ph:caret-down w-4 h-4 transition-transform',
+                  isDropdownOpen ? 'rotate-180' : '',
+                )}
+              />
+            </>
+          )}
+        </motion.button>
 
-        {isDropdownOpen && (
-          <div className="absolute right-2 flex flex-col gap-1 z-50 p-1 mt-1 min-w-[13.5rem] bg-bolt-elements-background-depth-2 rounded-md shadow-lg bg-bolt-elements-backgroundDefault border border-bolt-elements-borderColor">
-            <Button
-              active
-              onClick={() => {
-                onNetlifyDeploy();
-                setIsDropdownOpen(false);
-              }}
-              disabled={isDeploying || !activePreview || !netlifyConn.user}
-              className="flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative"
+        <AnimatePresence>
+          {isDropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-0 flex flex-col gap-1 z-50 p-2 mt-2 min-w-[15rem] bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-100 dark:border-gray-800"
             >
-              <img
-                className="w-5 h-5"
-                height="24"
-                width="24"
-                crossOrigin="anonymous"
-                src="https://cdn.simpleicons.org/netlify"
+              <DeployButton
+                icon={
+                  <img
+                    className="w-5 h-5"
+                    height="24"
+                    width="24"
+                    crossOrigin="anonymous"
+                    src="https://cdn.simpleicons.org/netlify"
+                  />
+                }
+                label={!netlifyConn.user ? 'No Netlify Account Connected' : 'Deploy to Netlify'}
+                onClick={() => {
+                  onNetlifyDeploy();
+                  setIsDropdownOpen(false);
+                }}
+                disabled={isDeploying || !activePreview || !netlifyConn.user}
+                extra={netlifyConn.user && <NetlifyDeploymentLink />}
               />
-              <span className="mx-auto">
-                {!netlifyConn.user ? 'No Netlify Account Connected' : 'Deploy to Netlify'}
-              </span>
-              {netlifyConn.user && <NetlifyDeploymentLink />}
-            </Button>
-            <Button
-              active
-              onClick={() => {
-                onVercelDeploy();
-                setIsDropdownOpen(false);
-              }}
-              disabled={isDeploying || !activePreview || !vercelConn.user}
-              className="flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative"
-            >
-              <img
-                className="w-5 h-5 bg-black p-1 rounded"
-                height="24"
-                width="24"
-                crossOrigin="anonymous"
-                src="https://cdn.simpleicons.org/vercel/white"
-                alt="vercel"
+
+              <DeployButton
+                icon={
+                  <img
+                    className="w-5 h-5 bg-black p-1 rounded"
+                    height="24"
+                    width="24"
+                    crossOrigin="anonymous"
+                    src="https://cdn.simpleicons.org/vercel/white"
+                    alt="vercel"
+                  />
+                }
+                label={!vercelConn.user ? 'No Vercel Account Connected' : 'Deploy to Vercel'}
+                onClick={() => {
+                  onVercelDeploy();
+                  setIsDropdownOpen(false);
+                }}
+                disabled={isDeploying || !activePreview || !vercelConn.user}
+                extra={vercelConn.user && <VercelDeploymentLink />}
               />
-              <span className="mx-auto">{!vercelConn.user ? 'No Vercel Account Connected' : 'Deploy to Vercel'}</span>
-              {vercelConn.user && <VercelDeploymentLink />}
-            </Button>
-            <Button
-              active={false}
-              disabled
-              className="flex items-center w-full rounded-md px-4 py-2 text-sm text-bolt-elements-textTertiary gap-2"
-            >
-              <span className="sr-only">Coming Soon</span>
-              <img
-                className="w-5 h-5"
-                height="24"
-                width="24"
-                crossOrigin="anonymous"
-                src="https://cdn.simpleicons.org/cloudflare"
-                alt="cloudflare"
+
+              <DeployButton
+                icon={
+                  <img
+                    className="w-5 h-5"
+                    height="24"
+                    width="24"
+                    crossOrigin="anonymous"
+                    src="https://cdn.simpleicons.org/cloudflare"
+                    alt="cloudflare"
+                  />
+                }
+                label="Deploy to Cloudflare (Coming Soon)"
+                disabled={true}
               />
-              <span className="mx-auto">Deploy to Cloudflare (Coming Soon)</span>
-            </Button>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden">
-        <Button
+
+      <div className="flex rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700">
+        <ViewButton
           active={showChat}
-          disabled={!canHideChat || isSmallViewport} // expand button is disabled on mobile as it's not needed
+          disabled={!canHideChat || isSmallViewport}
           onClick={() => {
             if (canHideChat) {
               chatStore.setKey('showChat', !showChat);
             }
           }}
-        >
-          <div className="i-bolt:chat text-sm" />
-        </Button>
-        <div className="w-[1px] bg-bolt-elements-borderColor" />
-        <Button
+          icon="i-bolt:chat"
+          tooltip="Toggle Chat"
+        />
+        <div className="w-[1px] bg-gray-200 dark:bg-gray-700" />
+        <ViewButton
           active={showWorkbench}
           onClick={() => {
             if (showWorkbench && !showChat) {
@@ -168,39 +193,67 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
 
             workbenchStore.showWorkbench.set(!showWorkbench);
           }}
-        >
-          <div className="i-ph:code-bold" />
-        </Button>
+          icon="i-ph:code-bold"
+          tooltip="Toggle Workbench"
+        />
       </div>
     </div>
   );
 }
 
-interface ButtonProps {
-  active?: boolean;
+interface DeployButtonProps {
+  icon: React.ReactNode;
+  label: string;
+  onClick?: () => void;
   disabled?: boolean;
-  children?: any;
-  onClick?: VoidFunction;
-  className?: string;
+  extra?: React.ReactNode;
 }
 
-function Button({ active = false, disabled = false, children, onClick, className }: ButtonProps) {
+function DeployButton({ icon, label, onClick, disabled = false, extra }: DeployButtonProps) {
   return (
-    <button
-      className={classNames(
-        'flex items-center p-1.5',
-        {
-          'bg-bolt-elements-item-backgroundDefault hover:bg-bolt-elements-item-backgroundActive text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary':
-            !active,
-          'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent': active && !disabled,
-          'bg-bolt-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
-            disabled,
-        },
-        className,
-      )}
+    <motion.button
+      whileHover={{ scale: disabled ? 1 : 1.02, backgroundColor: disabled ? '' : 'rgba(236, 252, 203, 0.1)' }}
+      whileTap={{ scale: disabled ? 1 : 0.98 }}
       onClick={onClick}
+      disabled={disabled}
+      className={classNames(
+        'flex items-center w-full px-4 py-2.5 text-sm rounded-md gap-2 transition-all',
+        disabled
+          ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed'
+          : 'text-gray-700 dark:text-gray-300 hover:bg-lime-50 dark:hover:bg-lime-950/20',
+      )}
     >
-      {children}
-    </button>
+      {icon}
+      <span className="mx-auto">{label}</span>
+      {extra}
+    </motion.button>
+  );
+}
+
+interface ViewButtonProps {
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  icon: string;
+  tooltip: string;
+}
+
+function ViewButton({ active, disabled = false, onClick, icon, tooltip }: ViewButtonProps) {
+  return (
+    <motion.button
+      whileHover={{ backgroundColor: disabled || active ? '' : 'rgba(236, 252, 203, 0.1)' }}
+      whileTap={{ scale: disabled ? 1 : 0.95 }}
+      className={classNames('flex items-center p-2 transition-all', {
+        'bg-white dark:bg-gray-900 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400':
+          !active,
+        'bg-lime-500 dark:bg-lime-600 text-white': active && !disabled,
+        'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed': disabled,
+      })}
+      onClick={onClick}
+      title={tooltip}
+      disabled={disabled}
+    >
+      <div className={`${icon} text-sm`} />
+    </motion.button>
   );
 }

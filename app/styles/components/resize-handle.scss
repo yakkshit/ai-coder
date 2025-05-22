@@ -1,30 +1,83 @@
-@use '../z-index';
-
-[data-resize-handle] {
-  position: relative;
-
-  &[data-panel-group-direction='horizontal']:after {
-    content: '';
-    position: absolute;
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+  
+  &.horizontal {
+    cursor: col-resize;
+    width: 6px;
     top: 0;
     bottom: 0;
-    left: -6px;
-    right: -5px;
-    z-index: z-index.$zIndexMax;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+    
+    &:hover, &.active {
+      background-color: rgba(132, 204, 22, 0.3);
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px;
+      height: 2rem;
+      border-radius: 1px;
+      background-color: rgba(132, 204, 22, 0.5);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    &:hover::after, &.active::after {
+      opacity: 1;
+    }
   }
-
-  &[data-panel-group-direction='vertical']:after {
-    content: '';
-    position: absolute;
+  
+  &.vertical {
+    cursor: row-resize;
+    height: 6px;
     left: 0;
     right: 0;
-    top: -5px;
-    bottom: -6px;
-    z-index: z-index.$zIndexMax;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+    
+    &:hover, &.active {
+      background-color: rgba(132, 204, 22, 0.3);
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 2px;
+      width: 2rem;
+      border-radius: 1px;
+      background-color: rgba(132, 204, 22, 0.5);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    &:hover::after, &.active::after {
+      opacity: 1;
+    }
   }
+}
 
-  &[data-resize-handle-state='hover']:after,
-  &[data-resize-handle-state='drag']:after {
-    background-color: #8882;
+.resize-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  
+  &.horizontal {
+    cursor: col-resize;
+  }
+  
+  &.vertical {
+    cursor: row-resize;
   }
 }

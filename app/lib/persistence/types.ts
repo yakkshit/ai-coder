@@ -5,3 +5,13 @@ export interface Snapshot {
   files: FileMap;
   summary?: string;
 }
+
+export interface ChatHistoryItem {
+  id: string;
+  urlId?: string;
+  description?: string;
+  messages?: any[];
+  timestamp?: string | number;
+  updatedAt?: string | number;
+  metadata?: any;
+}
