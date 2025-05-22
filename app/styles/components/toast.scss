@@ -25,11 +25,11 @@
   pointer-events: auto;
   transform-origin: bottom right;
   animation: toast-in 0.3s ease forwards;
-  
+
   &.toast-exiting {
     animation: toast-out 0.3s ease forwards;
   }
-  
+
   .toast-icon {
     flex-shrink: 0;
     width: 1.5rem;
@@ -37,38 +37,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     &.success {
       color: #84cc16;
     }
-    
+
     &.error {
       color: #ef4444;
     }
-    
+
     &.warning {
       color: #f59e0b;
     }
-    
+
     &.info {
       color: #3b82f6;
     }
   }
-  
+
   .toast-content {
     flex: 1;
-    
+
     .toast-title {
       font-weight: 600;
       margin-bottom: 0.25rem;
     }
-    
+
     .toast-description {
       font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8);
     }
   }
-  
+
   .toast-close {
     background: transparent;
     border: none;
@@ -77,13 +77,13 @@
     padding: 0.25rem;
     border-radius: 4px;
     transition: all 0.2s ease;
-    
+
     &:hover {
       color: white;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
-  
+
   .toast-progress {
     position: absolute;
     bottom: 0;

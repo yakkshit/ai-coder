@@ -1,7 +1,7 @@
 .resize-handle {
   position: absolute;
   z-index: 10;
-  
+
   &.horizontal {
     cursor: col-resize;
     width: 6px;
@@ -9,11 +9,12 @@
     bottom: 0;
     background-color: transparent;
     transition: background-color 0.2s ease;
-    
-    &:hover, &.active {
+
+    &:hover,
+    &.active {
       background-color: rgba(132, 204, 22, 0.3);
     }
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -27,12 +28,13 @@
       opacity: 0;
       transition: opacity 0.2s ease;
     }
-    
-    &:hover::after, &.active::after {
+
+    &:hover::after,
+    &.active::after {
       opacity: 1;
     }
   }
-  
+
   &.vertical {
     cursor: row-resize;
     height: 6px;
@@ -40,11 +42,12 @@
     right: 0;
     background-color: transparent;
     transition: background-color 0.2s ease;
-    
-    &:hover, &.active {
+
+    &:hover,
+    &.active {
       background-color: rgba(132, 204, 22, 0.3);
     }
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -58,8 +61,9 @@
       opacity: 0;
       transition: opacity 0.2s ease;
     }
-    
-    &:hover::after, &.active::after {
+
+    &:hover::after,
+    &.active::after {
       opacity: 1;
     }
   }
@@ -72,11 +76,11 @@
   right: 0;
   bottom: 0;
   z-index: 9;
-  
+
   &.horizontal {
     cursor: col-resize;
   }
-  
+
   &.vertical {
     cursor: row-resize;
   }

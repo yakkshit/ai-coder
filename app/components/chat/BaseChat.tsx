@@ -339,72 +339,73 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         <div className="flex flex-col lg:flex-row overflow-y-auto w-full h-full">
           <div className={classNames(styles.Chat, 'flex flex-col flex-grow lg:min-w-[var(--chat-min-width)] h-full')}>
             {!chatStarted && (
-                <div
-                  id="intro"
-                  className="mt-[10vh] max-w-2xl w-full mx-auto text-center px-4 sm:px-8 flex flex-col items-center gap-6"
+              <div
+                id="intro"
+                className="mt-[10vh] max-w-2xl w-full mx-auto text-center px-4 sm:px-8 flex flex-col items-center gap-6"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: -40, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                  className="w-full"
                 >
-                  <motion.div
-                    initial={{ opacity: 0, y: -40, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="w-full"
-                  >
-                    <h1
-                      className={`
+                  <h1
+                    className={`
                         font-extrabold text-4xl sm:text-5xl md:text-6xl mb-3 tracking-tight
                         bg-gradient-to-r from-lime-500 to-green-700 bg-clip-text text-transparent
                         dark:from-cyan-400 dark:to-cyan-700
                       `}
-                    >
-                      Lingo AI
-                    </h1>
-                    <div className="flex justify-center items-center gap-2 mb-2">
-                      <motion.span
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-                        className={`
+                  >
+                    Lingo AI
+                  </h1>
+                  <div className="flex justify-center items-center gap-2 mb-2">
+                    <motion.span
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+                      className={`
                           inline-block rounded-full px-3 py-1 text-xs font-semibold shadow-md
                           bg-lime-500 text-gray-900
                           dark:bg-cyan-400 dark:text-black
                         `}
-                      >
-                        Full-stack AI Platform
-                      </motion.span>
-                    </div>
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-                      className={`
+                    >
+                      Full-stack AI Platform
+                    </motion.span>
+                  </div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                    className={`
                         text-base sm:text-lg md:text-xl mb-1 font-medium
                         text-gray-800 dark:text-gray-200
                       `}
-                    >
-                      Build, create, and get help on projects—instantly.<br className="hidden sm:inline" />
-                      <span className="opacity-80">The AI workspace for your ideas.</span>
-                    </motion.p>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 0.7 }}
-                    className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center mt-1"
                   >
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">🚀</span>
-                      <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">Fast Setup</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">🛠️</span>
-                      <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">No-Code & Code</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">💡</span>
-                      <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">AI-Powered</span>
-                    </div>
-                  </motion.div>
-                </div>
+                    Build, create, and get help on projects—instantly.
+                    <br className="hidden sm:inline" />
+                    <span className="opacity-80">The AI workspace for your ideas.</span>
+                  </motion.p>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.7 }}
+                  className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center mt-1"
+                >
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">🚀</span>
+                    <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">Fast Setup</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">🛠️</span>
+                    <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">No-Code & Code</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl font-bold text-lime-500 dark:text-cyan-400">💡</span>
+                    <span className="text-xs sm:text-sm mt-1 text-gray-800 dark:text-gray-200">AI-Powered</span>
+                  </div>
+                </motion.div>
+              </div>
             )}
             <StickToBottom
               className={classNames('pt-6 px-2 sm:px-6 relative', {

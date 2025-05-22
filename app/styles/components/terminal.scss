@@ -4,24 +4,24 @@
   background-color: rgba(0, 0, 0, 0.8);
   border: 1px solid rgba(132, 204, 22, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  
+
   .xterm-viewport {
     border-radius: 8px;
-    
+
     &::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
-    
+
     &::-webkit-scrollbar-track {
       background: transparent;
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background-color: rgba(132, 204, 22, 0.3);
       border-radius: 4px;
     }
-    
+
     &::-webkit-scrollbar-thumb:hover {
       background-color: rgba(132, 204, 22, 0.5);
     }
@@ -38,7 +38,7 @@
   border-bottom: 1px solid rgba(132, 204, 22, 0.1);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  
+
   .terminal-title {
     font-size: 0.9rem;
     color: rgba(132, 204, 22, 0.8);
@@ -46,16 +46,16 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    
+
     .terminal-icon {
       font-size: 1.1rem;
     }
   }
-  
+
   .terminal-actions {
     display: flex;
     gap: 0.5rem;
-    
+
     button {
       background: transparent;
       border: none;
@@ -64,7 +64,7 @@
       padding: 0.25rem;
       border-radius: 4px;
       transition: all 0.2s ease;
-      
+
       &:hover {
         color: rgba(132, 204, 22, 0.8);
         background-color: rgba(132, 204, 22, 0.1);
@@ -78,7 +78,7 @@
   display: flex;
   background-color: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(132, 204, 22, 0.1);
-  
+
   .terminal-tab {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
@@ -86,12 +86,12 @@
     cursor: pointer;
     border-right: 1px solid rgba(132, 204, 22, 0.1);
     transition: all 0.2s ease;
-    
+
     &:hover {
       background-color: rgba(132, 204, 22, 0.1);
       color: rgba(132, 204, 22, 0.8);
     }
-    
+
     &.active {
       background-color: rgba(132, 204, 22, 0.15);
       color: rgba(132, 204, 22, 0.9);
